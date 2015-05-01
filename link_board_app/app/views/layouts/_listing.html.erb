@@ -1,0 +1,54 @@
+<% def count comments %>
+        <% count = comments.inject(0) do |sum,c|  %>
+            <% if c.comments.length == 0 %>
+                <% sum += 1 %>
+            <% else %>
+                <% sum += count(c.comments) + 1 %>
+            <% end %>
+            <% sum %>
+        <% end %>
+        <% count %>
+    <% end %>
+
+<div class="col-md-8 col-md-offset-2">
+    <table class="table table-striped">
+    <thead>
+    <tr><th></th><th class="text-center">Score</th><th>Link</th><th>Comments</th></tr>
+    </thead>
+    <tbody>
+
+        <% @posts.each do |p| %>
+            <tr class="post-row">
+                <td class="btn-cell">
+                    <% if @current_user %>
+                        <% i = @current_user.ratings.index{|v| v.votable_type == 'Post' && v.votable_id == p.id} %>
+                        <% voted = i.is_a?(Numeric) ? @current_user.ratings[i].value : nil %>
+                        <%= bootstrap_form_for [p, @vote] do |f| %>
+                            <%= f.hidden_field :value, value: "1" %>
+                            <%= f.button "", :class => "btn upvote glyphicon glyphicon-thumbs-up #{voted == 1 ? 'btn-success voted' : 'btn-default'}", id: "#{p.id}-upvote" %>
+                        <% end %>
+                        <%= bootstrap_form_for [p, @vote] do |f| %>
+                            <%= f.hidden_field :value, value: "-1" %>
+                            <%= f.button "", :class => "btn downvote glyphicon glyphicon-thumbs-down #{voted == -1 ? 'btn-danger voted' : 'btn-default'}", id: "#{p.id}-downvote" %>
+                        <% end %>
+                    <% end %>
+                </td>
+                <td class="text-center" id="<%=p.id%>-votes">
+                    <%= p.votes.inject(0) {|sum,v| sum+v.value} %>
+                </td>
+                <td>
+                    <%= p.title %>
+                    <small><%= link_to p.link %></small>
+                </td>
+                <td class="btn-cell">
+                    <% if @current_user %>
+                        <%= link_to "", new_post_comment_path(p), :class => "btn btn-primary btn-xs glyphicon glyphicon-plus-sign" %>
+                    <% end %>
+                    <%= link_to "", p, :class => "btn btn-primary btn-xs glyphicon glyphicon-comment" %>
+                    <span class="pull-right"><%= count p.comments %></span>
+                </td>
+            </tr>
+        <% end %>
+    </tbody>
+    </table>
+</div>

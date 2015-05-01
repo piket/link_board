@@ -1,0 +1,57 @@
+<% comments = comments.sort do |a,b| %>
+    <% a_votes = a.votes.reduce(0) {|sum,v| sum + v.value } %>
+    <% b_votes = b.votes.reduce(0) {|sum,v| sum + v.value } %>
+    <% a_votes < b_votes ? 1:-1 %>
+<% end %>
+
+<% if comments.length > 0 %>
+    <div class="comment-div col-md-11 col-md-offset-1">
+            <% comments.each do |comment| %>
+            <div class="row comment-row">
+                <!-- <div class="row"> -->
+                    <div class="comment-header">
+                        <h5><%= comment.user.name %> <small>Created: <%= comment.created_at.to_s %>
+                        <% if comment.updated_at > comment.created_at %>
+                            Edited: <%= comment.updated_at.to_s %>
+                        <% end %></small></h5>
+                        <!-- voting buttons -->
+                    <% if user %>
+                        <% i = user.ratings.index{|v| v.votable_type == 'Comment' && v.votable_id == comment.id} %>
+                        <% voted = i.is_a?(Numeric) ? user.ratings[i].value : nil %>
+                        <%= bootstrap_form_for [@post,comment, vote] do |f| %>
+                            <%= f.hidden_field :value, value: "1" %>
+                            <%= f.button "", :class => "btn btn-xs comment-upvote glyphicon glyphicon-thumbs-up #{voted == 1 ? 'btn-success voted' : 'btn-default'}", id: "#{comment.id}-upvote" %>
+                        <% end %>
+                        <%= bootstrap_form_for [@post,comment, vote] do |f| %>
+                            <%= f.hidden_field :value, value: "-1" %>
+                            <%= f.button "", :class => "btn btn-xs comment-downvote glyphicon glyphicon-thumbs-down #{voted == -1 ? 'btn-danger voted' : 'btn-default'}", id: "#{comment.id}-downvote" %>
+                        <% end %>
+                    <% end %>
+                        <p class="comment-score" id="<%=comment.id%>-votes"><%= comment.votes.inject(0) { |sum,v| sum + v.value } %></p>
+                        <%= link_to "Reply", new_post_comment_comment_path(@post,comment), :class => "btn btn-default btn-xs btn-reply" %>
+                        <% if user.id == comment.user_id %>
+                            <%= link_to "Edit", edit_post_comment_path(@post,comment), :class => "btn btn-default btn-xs btn-edit" %>
+                        <% end %>
+                    </div>
+                <!-- </div> -->
+                <!-- <div class="row"> -->
+                    <div class="comment-body">
+                        <%= comment.body %>
+                    </div>
+                <!-- </div> -->
+                <% if comment.comments.length > 0 %>
+                    <!-- <div class="row"> -->
+                        <div class="comment-nest">
+                            <% nested_comments = comment.comments.sort do |a,b| %>
+                                <% a_votes = a.votes.reduce(0) {|sum,v| sum + v.value } %>
+                                <% b_votes = b.votes.reduce(0) {|sum,v| sum + v.value } %>
+                                <% a_votes > b_votes ? 1:-1 %>
+                            <% end %>
+                            <%= render partial: "layouts/comment_display", locals: {comments: nested_comments, user: user, vote: vote} %>
+                        </div>
+                    <!-- </div> -->
+                <% end %>
+            </div>
+            <% end %>
+        </div>
+<% end %>

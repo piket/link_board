@@ -1,0 +1,13 @@
+<% if @comment_ref %>
+    <h4><%= @comment_ref.user.name %></h4>
+    <p><%= @comment_ref.body %></p>
+    <%= bootstrap_form_for [@post,@comment_ref,@comment] do |f| %>
+        <%= f.text_area :body %>
+        <%= f.primary %><input type="reset" class="btn btn-warning pull-right">
+    <% end %>
+<% else %>
+    <%= bootstrap_form_for [@post,@comment] do |f| %>
+        <%= f.text_area :body %>
+        <%= f.primary %><input type="reset" class="btn btn-warning pull-right">
+    <% end %>
+<% end %>

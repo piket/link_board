@@ -1,0 +1,10 @@
+<h1 class="text-center">Login</h1>
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <%= bootstrap_form_for :user do |f| %>
+            <%= f.text_field :name, :placeholder => "Username", hide_label: true, icon: "user", wrapper: {:class => "has-default user-form"}, help: "Invalid username" %>
+            <%= f.password_field :password, :placeholder => "Password", hide_label: true, icon: "lock", wrapper: {:class => "has-default user-form"}, help: "Invalid password" %>
+            <%= f.primary "Login" %><input type="reset" class="btn btn-warning pull-right">
+        <% end %>
+    </div>
+</div>

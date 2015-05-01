@@ -1,0 +1,27 @@
+<% if comments.length > 0 %>
+    <table class="table table-striped">
+        <tbody>
+            <% comments.each do |comment| %>
+                <tr class="comment-header">
+                    <th>
+                        <p><%= comment.user.name %> <small>Created: <%= comment.created_at.to_s %></h5>
+                        <% if comment.updated_at > comment.created_at %>
+                            Edited: <%= comment.updated_at.to_s %>
+                        <% end %></small>
+                        <%= link_to "Reply", new_post_comment_comment_path(@post,comment), :class => "btn btn-default btn-xs pull-right" %>
+                    </th>
+                </tr>
+                <tr class="comment-row">
+                    <td>
+                        <%= comment.body %>
+                    </td>
+                </tr>
+                <%# if comment.comments.length > 0 %>
+                    <tr>
+                        <%= render partial: "layouts/comment", locals: {comments: comment.comments} %>
+                    </tr>
+                <%# end %>
+            <% end %>
+        </tbody>
+    </table>
+<% end %>

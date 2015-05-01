@@ -1,0 +1,10 @@
+<h1 class="text-center">Create a Post</h1>
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <%= bootstrap_form_for @post do |f| %>
+            <%= f.text_field :title, :placeholder => "Title", icon: "pencil", help: "Your title must be at least 20 characters long", wrapper: {:class => "has-default"} %>
+            <%= f.text_field :link, :placeholder => "enter link here", icon: "link", wrapper: {:class => "has-default"}, help: "Invalid url" %>
+            <%= f.primary "Create" %><input type="reset" class="btn btn-warning pull-right">
+        <% end %>
+    </div>
+</div>

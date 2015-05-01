@@ -1,0 +1,115 @@
+.has-error>input {
+    color: #843534;
+}
+
+.has-success>input {
+    color: #2b542c;
+}
+
+.post-row {
+    height: 40px;
+}
+
+.btn-cell {
+    position: relative;
+    width: 100px;
+}
+
+form>button.upvote {
+    position: absolute;
+    top: 3px;
+    right: 50px;
+}
+
+form>button.downvote {
+    position: absolute;
+    top: 3px;
+    right: 5px;
+}
+
+form>button.comment-upvote {
+    position: absolute;
+    top: -8px;
+    right: 155px;
+}
+
+form>button.comment-downvote {
+    position: absolute;
+    top: -8px;
+    right: 130px;
+}
+
+.voted {
+    position: absolute;
+    top: 2px;
+    right: 118px;
+    z-index: 1;
+    color: orange;
+    text-align: center;
+    font-weight: bold;
+    background-color: #ccc;
+}
+
+/*.btn-success.upvote.voted {
+    background-color: #cccccc;
+    border-color: #dcdcdc;
+}*/
+
+./*btn-danger.downvote.voted {
+    background-color: #cccccc;
+    border-color: #dcdcdc;
+}*/
+
+div.comment-div {
+    /*border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;*/
+    padding-left: 20px;
+}
+
+div.comment-row {
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-top-left-radius: 10px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+}
+
+div.comment-header {
+    position: relative;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 0px;
+    margin-bottom: 5px;
+}
+
+div.comment-header>h5 {
+    margin-bottom: 1px;
+}
+
+div.comment-body {
+    padding-bottom: 10px;
+}
+
+.btn-reply {
+    position: absolute;
+    top: -8px;
+    right: 10px;
+}
+
+.btn-edit {
+    position: absolute;
+    top: -8px;
+    right: 55px;
+}
+
+.comment-score {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 38px;
+    text-align: center;
+    position: absolute;
+    top: -8px;
+    right: 90px;
+}
